@@ -1,12 +1,17 @@
-let context, form;
+let context, form, formFilter;
 
 function makeEditable(ctx) {
     context = ctx;
     form = $('#detailsForm');
+    formFilter = $('#filterForm');
     $(".delete").click(function () {
         if (confirm('Are you sure?')) {
-            deleteRow($(this).attr("id"));
+            deleteRow($(this).closest("tr").attr("id"));
         }
+    });
+
+    $(".enabled").change(function () {
+        changeStatus($(this).closest("tr").attr("id"));
     });
 
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
@@ -29,12 +34,6 @@ function deleteRow(id) {
     }).done(function () {
         updateTable();
         successNoty("Deleted");
-    });
-}
-
-function updateTable() {
-    $.get(context.ajaxUrl, function (data) {
-        context.datatableApi.clear().rows.add(data).draw();
     });
 }
 

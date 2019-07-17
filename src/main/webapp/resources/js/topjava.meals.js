@@ -1,25 +1,19 @@
 // $(document).ready(function () {
 $(function () {
     makeEditable({
-            ajaxUrl: "ajax/admin/users/",
+            ajaxUrl: "ajax/meals/",
             datatableApi: $("#datatable").DataTable({
                 "paging": false,
                 "info": true,
                 "columns": [
                     {
-                        "data": "name"
+                        "data": "dateTime"
                     },
                     {
-                        "data": "email"
+                        "data": "description"
                     },
                     {
-                        "data": "roles"
-                    },
-                    {
-                        "data": "enabled"
-                    },
-                    {
-                        "data": "registered"
+                        "data": "calories"
                     },
                     {
                         "defaultContent": "Edit",
@@ -33,7 +27,7 @@ $(function () {
                 "order": [
                     [
                         0,
-                        "asc"
+                        "desc"
                     ]
                 ]
             })
@@ -42,19 +36,11 @@ $(function () {
 });
 
 function updateTable() {
-    $.get(context.ajaxUrl, function (data) {
-        context.datatableApi.clear().rows.add(data).draw();
-    });
-}
-
-function changeStatus(id) {
-    alert(id);
     $.ajax({
-        url: context.ajaxUrl + 'status',
         type: "POST",
-        data: {"id": id}
-    }).done(function () {
-        updateTable();
-        successNoty("Status changed");
+        url: context.ajaxUrl + 'filter',
+        data: formFilter.serialize()
+    }).done(function (data) {
+        context.datatableApi.clear().rows.add(data).draw();
     });
 }
