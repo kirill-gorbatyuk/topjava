@@ -76,8 +76,6 @@
         </div>
     </div>
 </div>
-<jsp:include page="fragments/footer.jsp"/>
-</body>
 <script type="text/javascript">
     const i18n = [];
     i18n["addTitle"] = '<spring:message code="user.add"/>';
@@ -87,4 +85,6 @@
     i18n["${key}"] = "<spring:message code="${key}"/>";
     </c:forEach>
 </script>
+<jsp:include page="fragments/footer.jsp"/>
+</body>
 </html>
